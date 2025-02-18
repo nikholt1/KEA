@@ -1,8 +1,7 @@
-
 import java.util.Random;
 import java.util.Scanner;
 
-public class BlackJackDiceGame2 {
+public class BlackjackDiceGame {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -15,7 +14,7 @@ public class BlackJackDiceGame2 {
         System.out.println("You start with a: " + userN);
 
         while (true) {
-            if (!userLogicCheck(userN)) {  // Exit if user is over 21 or gets blackjack
+            if (!userLogicCheck(userN)) {
                 return;
             }
 
@@ -24,7 +23,7 @@ public class BlackJackDiceGame2 {
                 int newRoll = roll(random);
                 userN += newRoll;
 
-                if (!userLogicCheck(userN)) {  // Check again before printing
+                if (!userLogicCheck(userN)) {
                     return;
                 }
 
@@ -32,7 +31,7 @@ public class BlackJackDiceGame2 {
             } else {
                 machineN = machineLogicCheck(machineN, random);
                 calculate(machineN, userN);
-                return;  // Exit after calculating the winner
+                return;
             }
         }
 
@@ -40,23 +39,26 @@ public class BlackJackDiceGame2 {
 
     }
     public static void calculate(int machineN, int userInt) {
-        System.out.println("Machine got " + machineN + " you got " + userInt);
+
         if (userInt > machineN) {
             System.out.println("you win");
+        } else if (userInt == machineN) {
+            System.out.println("It is a draw");
         } else {
-            System.out.println("machine wins");
+            System.out.println("Machine win!"); // machine vinder stadig hvis den exceeder. // evt sæt det op ligesom userlogic
         }
-
+        System.out.println("you got " + userInt);
+        System.out.println("Machine got " + machineN);
     }
 
 
-    public static int machineLogicCheck(int machineN, Random random) {
+    public static int machineLogicCheck(int machineN, Random random) { // evt kør boolean ligesom userlogic, og calculate hvis true
         while (true) {
             if (machineN <= 16) {
                 machineN += roll(random);
 
             } else if (machineN > 21) {
-                System.out.println("machine exceeded 21, you won");
+                System.out.println("Machine exceeded 21, You win!");
                 return machineN;
             } else {
                 return machineN;
@@ -65,27 +67,25 @@ public class BlackJackDiceGame2 {
         }
     }
 
-
     public static boolean userLogicCheck(int userN){
         if (userN == 21) {
-            System.out.println("blackjack");
+            System.out.println("blackjack! You win!");
             return false;
         } else if (userN > 21) {
-            System.out.println("you exceeded 21");
+            System.out.println("You exceeded 21, Machine win!");
             return false;
         } else {
             return true;
         }
     }
 
-
     public static int roll(Random random){
-        // 2 dice beregning return
         return random.nextInt(1, 7) + random.nextInt(1, 7);
 
     }
     public static String getUserChoice(Scanner scanner) {
         while (true) {
+            System.out.println("Do you want to roll again y/n");
             String userInput = scanner.nextLine().trim().toLowerCase();
             if (userInput.equals("y") || userInput.equals("n")) {
                 return userInput;
