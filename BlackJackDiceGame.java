@@ -17,17 +17,22 @@ public class BlackjackDiceGame {
         // Laver class random i main for ikke at åbne den flere steder
         Random random = new Random();
 
-        // caller gamelogic method og starter spillet
-        while (true) {
+
+        // prompt for start game menu
+        System.out.println("Start game y/n");
+        // Loop for at genstarte hvis getUserChoice = y
+        while(true) {
+            // Hvis user choice == y fire gameLogic
             if (getUserChoice(scanner).equals("y")) {
                 gameLogic(random, scanner, BLACKJACK, ROLL_START_RANGE, ROLL_END_RANGE, MACHINE_HIT_THRESHOLD);
+                // Efter gameLogic prompt for reroll
+                System.out.println("play again y/n");
             } else {
-                System.out.println("-----Exiting game-----");
+                // Alle andre tilfælde = exit
+                System.out.println("exit");
                 break;
             }
-
         }
-
 
         // når spillet har nået slutning, lukker scanner
         scanner.close();
@@ -56,6 +61,9 @@ public class BlackjackDiceGame {
                 return;
             }
 
+
+            System.out.println("Do you want to roll again? (y/n)");
+
             // definerer input som holder return value af getUserChoise method
             String input = getUserChoice(scanner);
 
@@ -69,7 +77,7 @@ public class BlackjackDiceGame {
                 }
                 // hvis ikke er på eller over blackjack, printer status
                 System.out.println("You now have: " + userN);
-            // hvis input er alt andet en "y" initializer vi machine roll inde i machine logiccheck
+                // hvis input er alt andet en "y" initializer vi machine roll inde i machine logiccheck
             } else {
                 machineN = machineLogicCheck(machineN, random, BLACKJACK, ROLL_START_RANGE,
                         ROLL_END_RANGE, MACHINE_HIT_THRESHOLD);
@@ -78,7 +86,7 @@ public class BlackjackDiceGame {
                 if (machineN > BLACKJACK) {
                     return;
 
-                // Hvis machine nummer ikke er over blackjack kan vi calculate.
+                    // Hvis machine nummer ikke er over blackjack kan vi calculate.
                 } else {
                     // caller calculate method og returner for clean exit.
                     calculate(machineN, userN);
@@ -94,10 +102,10 @@ public class BlackjackDiceGame {
         // hvis user nummer er over machine nummer: vi vinder
         if (userInt > machineN) {
             System.out.println("You win!");
-        // hvis user nummer er lig med machine nummer: er vi i draw
+            // hvis user nummer er lig med machine nummer: er vi i draw
         } else if (userInt == machineN) {
             System.out.println("It is a draw.");
-        // alle andre omstændigheder vinder machine
+            // alle andre omstændigheder vinder machine
         } else {
             System.out.println("Machine wins!");
         }
@@ -115,11 +123,11 @@ public class BlackjackDiceGame {
             //hvis machineN er under threshold: add return value af roll til machineN
             if (machineN <= MACHINE_HIT_THRESHOLD) {
                 machineN += roll(random, ROLL_START_RANGE, ROLL_END_RANGE);
-            // hvis machineN er over blackjack print "exceeded" og return nummer til gameLogic
+                // hvis machineN er over blackjack print "exceeded" og return nummer til gameLogic
             } else if (machineN > BLACKJACK) {
                 System.out.println("Machine exceeded " + BLACKJACK + ", You win!");
                 return machineN;
-            // alle andre tilfælde return machineN
+                // alle andre tilfælde return machineN
             } else {
                 return machineN;
             }
@@ -132,11 +140,11 @@ public class BlackjackDiceGame {
         if (userN == BLACKJACK) {
             System.out.println("Blackjack! You win!");
             return false;
-        // hvis userN er over blackjack, return false for at return i game logic for at undgå machinelogicCheck method call
+            // hvis userN er over blackjack, return false for at return i game logic for at undgå machinelogicCheck method call
         } else if (userN > BLACKJACK) {
             System.out.println("You exceeded " + BLACKJACK + ", Machine wins!");
             return false;
-        // ellers return true for at gennemføre machineLogicCheck method call.
+            // ellers return true for at gennemføre machineLogicCheck method call.
         } else {
             return true;
         }
@@ -152,8 +160,6 @@ public class BlackjackDiceGame {
     public static String getUserChoice(Scanner scanner) {
         // Loop for reprompt
         while (true) {
-            // print choice
-            System.out.println("Do you want to roll again? (y/n)");
             // Definer user input med scanner + fjern spaces og lav lovercase
             String userInput = scanner.nextLine().trim().toLowerCase();
             // Hvis user input stemmer overens med parametre returner vi user input til gameLogic
@@ -165,4 +171,3 @@ public class BlackjackDiceGame {
         }
     }
 }
-
