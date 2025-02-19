@@ -3,24 +3,32 @@ import java.util.Scanner;
 
 public class BlackjackDiceGame {
     public static void main(String[] args) {
-        // sætter final int BLACKJACK, da 21 altid er blackjack
+        // sæt final int BLACKJACK, 21 er altid blackjack
         final int BLACKJACK = 21;
-        // sætter final int roll start range for bedre debug og code control
+        // sæt final int roll start range for bedre debug og code control
         final int ROLL_START_RANGE = 1;
-        // sætter final int roll end range for bedre debug og code control
+        // sæt final int roll end range for bedre debug og code control
         final int ROLL_END_RANGE = 7;
-        // sætter final int machine hit threshold for bedre debug og code control
+        // sæt final int machine hit threshold for bedre debug og code control
         final int MACHINE_HIT_THRESHOLD = 16;
 
-        // Laver class scanner i main for ikke at åbne den flere steder
+        // Lav class scanner i main for ikke at åbne den flere steder
         Scanner scanner = new Scanner(System.in);
-        // Laver class random i main for ikke at åbne den flere steder
+        // Lav class random i main for ikke at åbne den flere steder
         Random random = new Random();
 
+        // start game loop
+        gameLoop(random, scanner, BLACKJACK, ROLL_START_RANGE, ROLL_END_RANGE, MACHINE_HIT_THRESHOLD);
+
+        // når spil har nået slutning, luk scanner
+        scanner.close();
+    }
+
+    public static void gameLoop(Random random, Scanner scanner, int BLACKJACK, int ROLL_START_RANGE, int ROLL_END_RANGE, int  MACHINE_HIT_THRESHOLD) {
 
         // prompt for start game menu
         System.out.println("Start game y/n");
-        // Loop for at genstarte hvis getUserChoice = y
+        // Loop for genstart hvis getUserChoice = y
         while(true) {
             // Hvis user choice == y fire gameLogic
             if (getUserChoice(scanner).equals("y")) {
@@ -30,54 +38,51 @@ public class BlackjackDiceGame {
             } else {
                 // Alle andre tilfælde = exit
                 System.out.println("exit");
-                break;
+                // return til scanner close i main
+                return;
             }
         }
-
-        // når spillet har nået slutning, lukker scanner
-        scanner.close();
     }
 
 
-    // Method: game logic: indeholder spil logikken og caller de nødvendige methods derfra.
+    // Method: game logic: logik og caller de nødvendige methods
     public static void gameLogic(Random random, Scanner scanner, int BLACKJACK, int ROLL_START_RANGE,
                                  int ROLL_END_RANGE, int MACHINE_HIT_THRESHOLD) {
 
 
-        // definerer userN og starter med 1 roll
+        // definer userN og starter med 1 roll
         int userN = roll(random, ROLL_START_RANGE, ROLL_END_RANGE);
 
-        // definerer machineN og starter med 1 roll
+        // definer machineN og starter med 1 roll
         int machineN = roll(random, ROLL_START_RANGE, ROLL_END_RANGE);
 
-        // sætter start outputtet
+        // sæt start output
         System.out.println("You start with a: " + userN);
 
         // While loop: for game logic
         while (true) {
-            // hvis user method returner false skal vi break, da den kun returner false, hvis vi enten rammer
-            // blackjack eller exceeder blackjack
+            // hvis user method returner false break, returner kun false, hvis blackjack / exceed
             if (!userLogicCheck(userN, BLACKJACK)) {
                 return;
             }
 
-
+            // prompt for roll
             System.out.println("Do you want to roll again? (y/n)");
 
-            // definerer input som holder return value af getUserChoise method
+            // definer input holder return value af getUserChoise method
             String input = getUserChoice(scanner);
 
-            // hvis input er "y" fortætter vi spillet og tilføjer return value af roll til vores userN
+            // hvis input er "y" fortæt vi spil og tilføj return value af roll til userN
             if (input.equals("y")) {
                 userN += roll(random, ROLL_START_RANGE, ROLL_END_RANGE);
 
-                // tjek om vi er exceeded eller rammer blackjack
+                // tjek om exceeded eller blackjack efter roll
                 if (!userLogicCheck(userN, BLACKJACK)) {
                     return;
                 }
-                // hvis ikke er på eller over blackjack, printer status
+                // print status hvis userN != blackjack eller exceed
                 System.out.println("You now have: " + userN);
-                // hvis input er alt andet en "y" initializer vi machine roll inde i machine logiccheck
+                // hvis input er alt andet en "y" initialize machine roll ved machineLogiCheck call
             } else {
                 machineN = machineLogicCheck(machineN, random, BLACKJACK, ROLL_START_RANGE,
                         ROLL_END_RANGE, MACHINE_HIT_THRESHOLD);
@@ -86,9 +91,9 @@ public class BlackjackDiceGame {
                 if (machineN > BLACKJACK) {
                     return;
 
-                    // Hvis machine nummer ikke er over blackjack kan vi calculate.
+                    // Hvis machine nummer ikke er over blackjack, call calculate method.
                 } else {
-                    // caller calculate method og returner for clean exit.
+                    // call calculate method og return for clean exit.
                     calculate(machineN, userN);
                     return;
                 }
@@ -156,17 +161,18 @@ public class BlackjackDiceGame {
         return random.nextInt(ROLL_START_RANGE, ROLL_END_RANGE) + random.nextInt(ROLL_START_RANGE, ROLL_END_RANGE);
     }
 
+
     // Method: getuserChoice, luk for alle andre muligheder end y og n.
     public static String getUserChoice(Scanner scanner) {
         // Loop for reprompt
         while (true) {
             // Definer user input med scanner + fjern spaces og lav lovercase
             String userInput = scanner.nextLine().trim().toLowerCase();
-            // Hvis user input stemmer overens med parametre returner vi user input til gameLogic
+            // Hvis user input stemmer overens med conditions return user input til gameLogic
             if (userInput.equals("y") || userInput.equals("n")) {
                 return userInput;
             }
-            // alle andre tilfælde reprompt user.
+            // ellers reprompt user.
             System.out.println("Invalid input. Please enter y/n");
         }
     }
