@@ -1,0 +1,35 @@
+package Modules;
+
+public class Cat extends Tamagochi {
+    public boolean isDead;
+//
+//    public Cat(String name, int age, String mood, int energy, boolean isDead) {
+//        super(name, age, mood, energy);
+//
+//    }
+    public Cat(String name) {
+        super(name);
+
+    }
+
+
+    public boolean getIsDead(boolean isDead) {
+        return isDead;
+    }
+    public void setIsDead() {
+        this.isDead = isDead;
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println("Mi ow!");
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getAge() + " " + getMood() + " " + getEnergy() + " " + isDead;
+    }
+
+
+}
+
