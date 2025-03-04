@@ -1,0 +1,79 @@
+package Modules;
+
+public class Tamagochi {
+    private String name;
+    private int age = 0;
+    private String mood = "moderate";
+    private int energy = 100;
+
+
+//    public Tamagochi(String name, int age, String mood, int energy) {
+//        this.name = name;
+//        this.age = age;
+//        this.mood = mood;
+//        this.energy = energy;
+//    }
+
+    public Tamagochi(String name) {
+        this.name = name;
+    }
+
+    public void makeSound(){
+        System.out.println("Rabble!");
+    }
+
+
+    public void play(Tamagochi a) {
+        System.out.println(a + "plays");
+        energy -= 5;
+    }
+    public void feed(Tamagochi a) {
+        System.out.println(a + " feeds");
+        energy += 5;
+    }
+
+    public void sleep(Tamagochi a) {
+        System.out.println(a + "sleeps");
+        energy += 10;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getMood() {
+        return mood;
+    }
+
+    public void setMood(String mood) {
+        this.mood = mood;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
+    public String toString() {
+        return name + age + mood + energy;
+    }
+
+
+
+}
