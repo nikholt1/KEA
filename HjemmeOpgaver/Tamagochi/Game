@@ -1,5 +1,6 @@
 package Services;
 
+
 import Modules.*;
 
 
@@ -7,25 +8,19 @@ import java.util.Scanner;
 public class Game {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
         dogOrCatChoice(scanner);
-
-
-        Cat cat = new Cat("asshole");
-        Dog dog = new Dog("Shithole");
-        cat.makeSound();
-        dog.makeSound();
-        Tamagochi tama = new Tamagochi("cat");
-        tama.makeSound();
 
     }
 
     public static void dogOrCatChoice(Scanner scanner) {
-        System.out.println("Make a Tamagochi, choose a cat or a dog.");
-        String tamagochiChoice = scanner.nextLine();
-        System.out.println("Input name");
-        String name = scanner.nextLine();
+
 
         while (true) {
+            System.out.println("Make a Tamagochi, choose a cat or a dog.");
+            String tamagochiChoice = scanner.nextLine();
+            System.out.println("Input name");
+            String name = scanner.nextLine();
             if (choiceCheck(tamagochiChoice)) {
                 if (tamagochiChoice.equals("cat")) {
                     Cat cat = new Cat(name);
@@ -40,34 +35,10 @@ public class Game {
                 }
             }
         }
-
-
-
-//        while (true) {
-//            String tamagochiChoice = scanner.nextLine();
-//            if (choiceCheck(tamagochiChoice)) {
-//                System.out.println("Input name");
-//                String name = scanner.nextLine();
-//                if (tamagochiChoice.equals("cat")) {
-//                    Cat cat = new Cat(name);
-//                    System.out.println("New cat with name " + name + " created");
-//                    gameLogic(scanner, cat);
-//                    break;
-//                } else {
-//                    Dog dog = new Dog(name);
-//                    System.out.println("New dog with name " + name + " created");
-//                    gameLogic(scanner, dog);
-//                    break;
-//                }
-//
-//            }
-//        }
     }
     public static void gameLogic(Scanner scanner, Tamagochi d) {
 
         while (true) {
-
-
             System.out.println("Play / feed / sleep / switch / exit ");
             String choice = scanner.nextLine().strip().toLowerCase();
             if (choiceCheck(choice)) {
@@ -75,44 +46,38 @@ public class Game {
                     System.out.println("exiting program");
                     break;
                 } else if (choice.equals("play")){
-                    d.readTamagotchis(d);
-
                     System.out.println("Play together? write ' yes/no ' ");
                     choice = scanner.nextLine();
                     if (choiceCheck(choice)) {
                         if (choice.equals("yes")) {
 
                         } else {
-                            d.makeSound();
                             d.play(d);
-                            System.out.println(d.getName() + "play");
-                            System.out.println(choice);
-                            System.out.println(d.getEnergy());
                         }
                     }
 
                 } else if (choice.equals("feed")) {
-                    d.makeSound();
                     d.feed(d);
-                    System.out.println(d.getName() + "eats");
-                    System.out.println(choice);
-                    System.out.println(d.getEnergy());
-                    System.out.println(choice);
                 } else if (choice.equals("sleep")) {
-                    d.makeSound();
                     d.sleep(d);
-                    System.out.println(d.getName() + "sleeps");
-                    System.out.println(choice);
-                    System.out.println(d.getEnergy());
-                    System.out.println(choice);
                 } else if (choice.equals("switch")) {
-                    System.out.println(choice);
+                    Tamagochi newTama = d.switchTamagotchis(); // Get the new Tamagotchi
+                    if (newTama != d) { // Only update if a new Tamagotchi was found
+                        d = newTama;
+                    } else {
+
+                    }
+
+
+
+
                 }
             }
         }
     }
     public static Boolean choiceCheck(String choice) {
-        if (choice.equals("play")|| choice.equals("yes") || choice.equals("no") ||choice.equals("sleep") || choice.equals("feed") || choice.equals("exit")
+        if (choice.equals("play")|| choice.equals("yes") || choice.equals("no") ||
+                choice.equals("sleep") || choice.equals("feed") || choice.equals("exit")
                 || choice.equals("dog") || choice.equals("cat") || choice.equals("switch")) {
             return true;
         } else {
