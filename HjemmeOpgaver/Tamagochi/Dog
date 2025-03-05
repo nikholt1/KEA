@@ -1,13 +1,18 @@
 package Modules;
 
 public class Dog extends Tamagochi{
-    public boolean isDead;
-
 
     public Dog(String name) {
         super(name);
 
     }
+    public void makeDog(Tamagochi a) {
+        makeTamagotchi(a);
+    }
+    public void play(Tamagochi a) {
+        System.out.println("wags tail");
+    }
+
 
     @Override
     public void makeSound(){
@@ -16,7 +21,7 @@ public class Dog extends Tamagochi{
 
     @Override
     public String toString() {
-        return getName() + " " + getAge() + " " + getMood() + " " + getEnergy() + " " + isDead;
+        return getName() + " " + getAge() + " " + getMood() + " " + getEnergy() + " " + getIsDead();
     }
 
 }
