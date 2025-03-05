@@ -1,8 +1,11 @@
 package Modules;
+package Modules;
+
+import java.util.Arrays;
 
 public class Cat extends Tamagochi {
-    public boolean isDead;
-//
+    private boolean isDead;
+    //
 //    public Cat(String name, int age, String mood, int energy, boolean isDead) {
 //        super(name, age, mood, energy);
 //
@@ -12,13 +15,17 @@ public class Cat extends Tamagochi {
 
     }
 
+    public void makeCat(Tamagochi a) {
+        makeTamagotchi(a);
+    }
+    public boolean checkDead(Cat a) {
+        if (readTamagotchis(a).contains("false")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-    public boolean getIsDead(boolean isDead) {
-        return isDead;
-    }
-    public void setIsDead() {
-        this.isDead = isDead;
-    }
 
     @Override
     public void makeSound() {
@@ -27,9 +34,8 @@ public class Cat extends Tamagochi {
 
     @Override
     public String toString() {
-        return getName() + " " + getAge() + " " + getMood() + " " + getEnergy() + " " + isDead;
+        return getName() + " " + getAge() + " " + getMood() + " " + getEnergy() + " " + getIsDead();
     }
 
 
 }
-
