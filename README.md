@@ -1,4 +1,4 @@
-🎓 Academy Projects Collection
+# Academy Projects Collection
 
 🏆 Key Features  
 - Repo will have folders with bigger projects.
