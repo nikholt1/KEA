@@ -1,17 +1,18 @@
 # Academy Projects Collection
 
-🏆 Key Features  
+Key Features  
 - Repo will have folders with bigger projects.
 - smaller projects will stand as is.
 
 
 
-📂 Description:
+Description:
 
 A collection of the smaller and bigger projects that i have made myself or in 
 a group (developers per project is under the actual codes description)
 
 The code in the collection is all from my time in Computer Science at Københavns Erhvervsakademi
+
 ![image](https://github.com/user-attachments/assets/6d9eef64-b6ca-4dda-b94d-a43196807847)
 
 
