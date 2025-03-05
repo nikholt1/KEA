@@ -1,13 +1,14 @@
 package Modules;
 
+
 import java.util.Arrays;
 
 public class Tamagochi {
     private String name;
     private int age = 0;
-    private String mood = "moderate";
+    private String mood;
     private int energy = 100;
-    private Tamagochi[] tamagotchis;
+    private final Tamagochi[] tamagotchis;
     private final int MAX_TAMAGOCHIS = 2;
     private boolean isDead = false;
 
@@ -17,8 +18,6 @@ public class Tamagochi {
 
     }
 
-
-
     public void makeSound(){
         System.out.println("Rabble!");
     }
@@ -27,41 +26,93 @@ public class Tamagochi {
     }
 
     public void play(Tamagochi a) {
-        System.out.println(a + " plays");
-        energy -= 5;
+        if (!checkDeadTamagochi(a)) {
+            energy -= 40;
+            a.makeSound();
+            System.out.println(getName() + " plays");
+            checkMood(a);
+            if (energy <= 0) {
+                isDead = true;
+                System.out.println(getName() + " has died.");
+            }
+        } else {
+            System.out.println(getName() + " is dead");
+        }
+
+
     }
     public void feed(Tamagochi a) {
-        System.out.println(a + " feeds");
-        energy += 5;
+        System.out.println(getName() + " feeds");
+        if (!checkDeadTamagochi(a)) {
+            energy += 5;
+            checkMood(a);
+        } else {
+            System.out.println(getName() +" is dead");
+        }
+
     }
 
     public void sleep(Tamagochi a) {
-        System.out.println(a + " sleeps");
-        energy += 10;
+        if (!checkDeadTamagochi(a)) {
+            System.out.println(getName() + " sleeps");
+            energy += 10;
+            checkMood(a);
+        } else {
+            System.out.println(getName() + " is dead");
+        }
+
     }
 
-    public String readTamagotchis(Tamagochi a) {
-        String stringType = "";
+    public void checkMood(Tamagochi a) {
+        if (energy >= 100) {
+            mood = "happy";
+            System.out.println(getName() + " has become " + mood);
+
+        } else if (energy >= 50) {
+            mood = "groggy";
+            System.out.println(getName() + " has become " + mood);
+
+        } else {
+            mood = "half dead";
+            System.out.println(getName() + " has become " + mood);
+        }
+    }
+
+
+    public Tamagochi switchTamagotchis() {
         for (int i = 0; i < tamagotchis.length; i++) {
-            if (a == tamagotchis[i]) {
-                System.out.println("found" + tamagotchis[i]);
-                stringType = String.valueOf(tamagotchis[i]);
-                System.out.println(stringType);
-                break;
+            if (tamagotchis[i] != null && tamagotchis[i] != this) { 
+                System.out.println("Switched to " + tamagotchis[i].getName());
+                return tamagotchis[i]; 
             }
         }
-        return stringType;
+        System.out.println("No other Tamagotchi to switch to!");
+        return this; 
     }
+
     public void makeTamagotchi(Tamagochi a) {
+        boolean added = false; 
         for (int i = 0; i < tamagotchis.length; i++) {
             if (tamagotchis[i] == null) {
                 tamagotchis[i] = a;
-                System.out.println("Added " + a + " to your Tamagochis");
+                System.out.println("Added " + a.getName() + " to your Tamagotchis");
+                added = true;
                 break;
             }
         }
-    }
 
+        if (!added) { 
+            System.out.println("You already have " + tamagotchis.length + " Tamagotchis");
+        }
+    }
+    public boolean checkDeadTamagochi(Tamagochi a) {
+        for (int i = 0; i < tamagotchis.length; i++) {
+            if (String.valueOf(tamagotchis[i]).contains("true")) {
+                return true;
+            } else return false;
+        }
+        return false;
+    }
 
     public Tamagochi[] getTamagotchis(Tamagochi tamagotchi) {
         return tamagotchis;
