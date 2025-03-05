@@ -1,3 +1,5 @@
+package Services;
+
 import Modules.*;
 
 
@@ -19,37 +21,61 @@ public class Game {
 
     public static void dogOrCatChoice(Scanner scanner) {
         System.out.println("Make a Tamagochi, choose a cat or a dog.");
+        String tamagochiChoice = scanner.nextLine();
+        System.out.println("Input name");
+        String name = scanner.nextLine();
 
         while (true) {
-            String tamagochiChoice = scanner.nextLine();
             if (choiceCheck(tamagochiChoice)) {
-                System.out.println("Input name");
-                String name = scanner.nextLine();
                 if (tamagochiChoice.equals("cat")) {
                     Cat cat = new Cat(name);
-                    System.out.println("New cat with name " + name + " created");
+                    cat.makeCat(cat);
                     gameLogic(scanner, cat);
                     break;
                 } else {
                     Dog dog = new Dog(name);
-                    System.out.println("New dog with name " + name + " created");
+                    dog.makeDog(dog);
                     gameLogic(scanner, dog);
                     break;
                 }
-
             }
         }
+
+
+
+//        while (true) {
+//            String tamagochiChoice = scanner.nextLine();
+//            if (choiceCheck(tamagochiChoice)) {
+//                System.out.println("Input name");
+//                String name = scanner.nextLine();
+//                if (tamagochiChoice.equals("cat")) {
+//                    Cat cat = new Cat(name);
+//                    System.out.println("New cat with name " + name + " created");
+//                    gameLogic(scanner, cat);
+//                    break;
+//                } else {
+//                    Dog dog = new Dog(name);
+//                    System.out.println("New dog with name " + name + " created");
+//                    gameLogic(scanner, dog);
+//                    break;
+//                }
+//
+//            }
+//        }
     }
     public static void gameLogic(Scanner scanner, Tamagochi d) {
 
         while (true) {
-           System.out.println("Play / feed / sleep / switch / exit ");
-           String choice = scanner.nextLine().strip().toLowerCase();
-           if (choiceCheck(choice)) {
+
+
+            System.out.println("Play / feed / sleep / switch / exit ");
+            String choice = scanner.nextLine().strip().toLowerCase();
+            if (choiceCheck(choice)) {
                 if (choice.equals("exit")) {
                     System.out.println("exiting program");
                     break;
                 } else if (choice.equals("play")){
+                    d.readTamagotchis(d);
 
                     System.out.println("Play together? write ' yes/no ' ");
                     choice = scanner.nextLine();
@@ -82,12 +108,12 @@ public class Game {
                 } else if (choice.equals("switch")) {
                     System.out.println(choice);
                 }
-           }
-       }
+            }
+        }
     }
     public static Boolean choiceCheck(String choice) {
         if (choice.equals("play")|| choice.equals("yes") || choice.equals("no") ||choice.equals("sleep") || choice.equals("feed") || choice.equals("exit")
-        || choice.equals("dog") || choice.equals("cat") || choice.equals("switch")) {
+                || choice.equals("dog") || choice.equals("cat") || choice.equals("switch")) {
             return true;
         } else {
             System.out.println("Wrong input try again");
